@@ -1,5 +1,5 @@
 pipeline {
-   agent any
+   agent { docker { image 'python:3.6.9' } }
    stages {
       stage('Verify Branch') {
          steps {
@@ -9,14 +9,21 @@ pipeline {
       stage('Build Stage') {
       steps {
         echo '********* Build Stage Started **********'
-        bat 'pip install -r requirements.txt'
+        sh 'pip install -r requirements.txt'
         echo '********* Build Stage Finished **********'
         }
+    }
+    stage('Testing Stage') {
+      steps {
+        echo '********* Test Stage Started **********'
+        sh 'python test.py'
+        echo '********* Test Stage Finished **********'
+      }
     }
     stage('Deployment Stage') {
       steps {
         echo '********* Deployment Stage Started **********'
-        bat 'flask run'
+        sh 'flask run'
         echo '********* Deployment Stage Finished **********'
       }
     }
