@@ -16,7 +16,7 @@ pipeline {
     stage('Deployment Stage') {
       steps {
         echo '********* Deployment Stage Started **********'
-        bat 'flask run'
+        bat label: '', script: 'flask run'
         echo '********* Deployment Stage Finished **********'
       }
     }
