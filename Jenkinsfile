@@ -13,12 +13,6 @@ pipeline {
         echo '********* Build Stage Finished **********'
         }
     }
-    stage('Testing Stage') {
-      steps {
-        echo '********* Test Stage Started **********'
-        sh 'python3 test.py'
-        echo '********* Test Stage Finished **********'
-      }
     }
     stage('Deployment Stage') {
       steps {
