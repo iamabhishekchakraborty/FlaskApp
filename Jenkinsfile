@@ -13,7 +13,6 @@ pipeline {
         echo '********* Build Stage Finished **********'
         }
     }
-    }
     stage('Deployment Stage') {
       steps {
         echo '********* Deployment Stage Started **********'
