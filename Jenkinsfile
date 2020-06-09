@@ -9,14 +9,14 @@ pipeline {
       stage('Build Stage') {
       steps {
         echo '********* Build Stage Started **********'
-        sh 'pip install -r requirements.txt'
+        sh 'pip3 install -r requirements.txt'
         echo '********* Build Stage Finished **********'
         }
     }
     stage('Testing Stage') {
       steps {
         echo '********* Test Stage Started **********'
-        sh 'python test.py'
+        sh 'python3 test.py'
         echo '********* Test Stage Finished **********'
       }
     }
