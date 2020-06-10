@@ -6,6 +6,13 @@ pipeline {
             echo "$GIT_BRANCH"
          }
       }
+      stage('Environment setup') {
+      steps {
+        echo '********* Build Stage Started **********'
+        sh 'export APP_SETTINGS="config.DevelopmentConfig"'
+        echo '********* Build Stage Finished **********'
+        }
+    }
       stage('Install requirements') {
       steps {
         echo '********* Build Stage Started **********'
