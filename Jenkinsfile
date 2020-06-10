@@ -1,29 +1,21 @@
 pipeline {
-   agent { docker { image 'python:3.6.9' } }
    stages {
       stage('Verify Branch') {
          steps {
             echo "$GIT_BRANCH"
          }
       }
-      stage('Build Stage') {
+      stage('Install requirements') {
       steps {
         echo '********* Build Stage Started **********'
         sh 'pip3 install -r requirements.txt'
         echo '********* Build Stage Finished **********'
         }
     }
-    stage('Testing Stage') {
-      steps {
-        echo '********* Test Stage Started **********'
-        sh 'python3 test.py'
-        echo '********* Test Stage Finished **********'
-      }
-    }
-    stage('Deployment Stage') {
+    stage('Run script') {
       steps {
         echo '********* Deployment Stage Started **********'
-        sh 'flask run'
+        sh 'python3 app.py'
         echo '********* Deployment Stage Finished **********'
       }
     }
