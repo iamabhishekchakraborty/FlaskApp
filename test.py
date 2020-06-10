@@ -4,10 +4,10 @@ import app
 import re
 
 
-class MyTestCase(unittest.TestCase):
+class FlaskApp(unittest.TestCase):
     def setUp(self):
-        app.app.testing = True
-        self.app = app.app.test_client()
+        FlaskApp.app.testing = True
+        self.app = FlaskApp.app.test_client()
 
     def test_hello(self):
         rv = self.app.get('/')
@@ -18,6 +18,7 @@ class MyTestCase(unittest.TestCase):
         rv = self.app.get('/index/')
         self.assertEqual(rv.status, '200 OK')
         self.assertEqual(rv.data, b'I am here to help!\n')
+
 
 if __name__ == '__main__':
     ############# To Generate Test Reports  #############

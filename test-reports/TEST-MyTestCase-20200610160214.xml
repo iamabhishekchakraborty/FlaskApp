@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<testsuite errors="2" failures="0" name="MyTestCase-20200610160214" tests="2" time="0.000">
+	<testcase classname="MyTestCase" name="test_hello" time="0.000">
+		<error message="name 'FlaskApp' is not defined" type="NameError">
+<![CDATA[Traceback (most recent call last):
+  File "test.py", line 9, in setUp
+    FlaskApp.app.testing = True
+NameError: name 'FlaskApp' is not defined
+]]>		</error>
+	</testcase>
+	<testcase classname="MyTestCase" name="test_hello_index" time="0.000">
+		<error message="name 'FlaskApp' is not defined" type="NameError">
+<![CDATA[Traceback (most recent call last):
+  File "test.py", line 9, in setUp
+    FlaskApp.app.testing = True
+NameError: name 'FlaskApp' is not defined
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>
