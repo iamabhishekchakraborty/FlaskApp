@@ -3,7 +3,7 @@ import config
 from dotenv import load_dotenv
 import os
 
-APP_SETTINGS = os.environ['APP_SETTINGS']
+#APP_SETTINGS = os.environ['APP_SETTINGS']
 app = Flask(__name__)
 app.config.from_object(config.Config)
 # app.config.from_object(os.environ['APP_SETTINGS'])
