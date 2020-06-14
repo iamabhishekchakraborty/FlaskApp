@@ -6,6 +6,13 @@ pipeline {
             echo "$GIT_BRANCH"
          }
       }
+      stage('Build Docker') {
+      steps {
+        echo '********* Build Stage Started **********'
+        sh '"sudo docker build -t flask-app ."'
+        echo '********* Build Stage Finished **********'
+        }
+    }
       stage('Environment setup') {
       steps {
         echo '********* Build Stage Started **********'
@@ -13,17 +20,10 @@ pipeline {
         echo '********* Build Stage Finished **********'
         }
     }
-      stage('Install requirements') {
-      steps {
-        echo '********* Build Stage Started **********'
-        sh 'pip3 install -r requirements.txt'
-        echo '********* Build Stage Finished **********'
-        }
-    }
-    stage('Run script') {
+      stage('Run docker') {
       steps {
         echo '********* Deployment Stage Started **********'
-        sh 'python3 app.py'
+        sh "sudo docker run -p 8000:8000 --name flask-app -d flask-app "
         echo '********* Deployment Stage Finished **********'
       }
     }

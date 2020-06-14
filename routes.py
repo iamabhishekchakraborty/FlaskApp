@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_cors import CORS
-from app import app
+from flaskapp import app
 from os import environ, getcwd
 import getpass
 
