@@ -1,0 +1,8 @@
+.git
+.go-pkg-cache
+.gopath
+bundles
+vendor/pkg
+**/modules
+# Ignore generated files
+**/*.pyc

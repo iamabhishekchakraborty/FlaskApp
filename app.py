@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request, make_response
-import config
-from dotenv import load_dotenv
-import os
+from config_flaskapp import *
 
 # APP_SETTINGS = os.environ['APP_SETTINGS']
-app = Flask(__name__)
-app.config.from_object(config.Config)
 # app.config.from_object(os.environ['APP_SETTINGS'])
-app.config.from_object(config.DevelopmentConfig)
+
+
+# app = create_app()
+app = Flask(__name__)
+app.config.from_pyfile('config_flaskapp.py')
+app.config.from_object('config_flaskapp.Config')
+app.config.from_object('config_flaskapp.DevelopmentConfig')
 
 
 @app.route('/')
@@ -38,5 +40,5 @@ def get_locale():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=8000)
     # app.run(host='35.222.253.165',port=8000)

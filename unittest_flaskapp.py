@@ -2,7 +2,7 @@ import unittest
 import xmlrunner
 import tempfile
 import re
-from flaskapp import app
+from app import *
 
 
 class FlaskApp(unittest.TestCase):
