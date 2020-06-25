@@ -41,4 +41,4 @@ def get_locale():
 
 if __name__ == '__main__':
     app.run(port=8000)
-    # app.run(host='35.222.253.165',port=8000)
+    # app.run(host='35.209.191.70',port=8000)
