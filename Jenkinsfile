@@ -4,6 +4,7 @@ pipeline {
       stage('Verify Branch') {
          steps {
             echo "$GIT_BRANCH"
+            echo "This job was triggered by a Git push to branch: ${env.BRANCH_NAME}"
          }
       }
       stage('Build Docker') {
