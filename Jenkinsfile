@@ -1,10 +1,13 @@
-pipeline {
-   agent any
+pipeline  {
+   agent {
+      dockerfile true
+   }
    stages {
       stage('Verify Branch') {
          steps {
             echo "$GIT_BRANCH"
             echo "This job was triggered by a Git push to branch: ${env.BRANCH_NAME}"
+            sh 'echo $JENKINS_USER'
          }
       }
       stage('Build Docker') {
@@ -17,7 +20,7 @@ pipeline {
       stage('Run docker') {
       steps {
         echo '********* Deployment Stage Started **********'
-        sh "docker run -p 8000:8000 --name flask-app -d flask-app "
+        sh "docker run -p 5000:5000 --name flask-app -d flask-app "
         echo '********* Deployment Stage Finished **********'
       }
     }
