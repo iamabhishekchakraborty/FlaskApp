@@ -104,7 +104,7 @@ If you want to run docker as non-root user then you need to add it to the docker
     ```
 2. Add your user to the docker group.
     ```bash
-    sudo usermod -aG docker $USER
+    sudo usermod -aG docker <username>
     ```
 3. Run the following command or Logout and login again and run (that doesn't work you may need to reboot your machine first)
     ```bash
