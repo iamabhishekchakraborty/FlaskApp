@@ -10,6 +10,14 @@ pipeline  {
             sh 'echo $JENKINS_USER'
          }
       }
+      stage('Checks') {
+         steps {
+            sh 'pwd'
+            sh 'ls -ltrh'
+            sh 'docker info'
+            sh 'echo ${BUILD_NUMBER}'
+         }
+      }
       stage('Build Docker') {
       steps {
         echo '********* Build Stage Started **********'
