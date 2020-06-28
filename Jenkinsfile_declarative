@@ -1,6 +1,9 @@
-node  {
-      def build_ok = true
-
+pipeline  {
+   agent none
+   //{
+   //   dockerfile true
+   //}
+   stages {
       stage ('Git Checkout') {
          steps {
             checkout scm
@@ -20,19 +23,13 @@ node  {
             sh 'echo ${BUILD_NUMBER}'
          }
       }
-      try {
-          stage('Build Docker') {
-            steps {
-                echo '********* Build Stage Started **********'
-                def app
-                app = docker.build("flask-app")
-                echo '********* Build Stage Finished **********'
-            }
-          }
-      }
-      catch(e) {
-        build_ok = false
-        echo e.toString()
+      stage('Build Docker') {
+        agent any
+        steps {
+            echo '********* Build Stage Started **********'
+            sh '"docker build -t flask-app ."'
+            echo '********* Build Stage Finished **********'
+        }
       }
       stage('Push Docker Image') {
         steps {
@@ -53,4 +50,5 @@ node  {
             echo '********* Deployment Stage Finished **********'
         }
       }
+   }
 }
