@@ -6,7 +6,7 @@ node  {
       }
 
       stage('Initialize') {
-            def dockerHome = tool 'docker-agent'
+            def dockerHome = tool 'gcp-docker'
             env.PATH = "${dockerHome}/bin:${env.PATH}"
       }
 
