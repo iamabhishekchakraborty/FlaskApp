@@ -11,7 +11,7 @@ node  {
       }
 
       stage('Verify Branch') {
-            echo "$GIT_BRANCH"
+            sh 'echo $GIT_BRANCH'
             echo "This job was triggered by a Git push to branch: ${env.BRANCH_NAME}"
             sh 'echo $JENKINS_USER'
             sh 'echo ${BUILD_NUMBER}'
