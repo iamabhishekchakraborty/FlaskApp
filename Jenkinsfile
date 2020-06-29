@@ -16,6 +16,7 @@ node  {
             echo "This job was triggered by a Git push to branch: ${env.BRANCH_NAME}"
             sh 'echo $JENKINS_USER'
             sh 'echo ${BUILD_NUMBER}'
+            sh 'echo ${BUILD_TAG}'
       }
 
       try {
@@ -32,7 +33,9 @@ node  {
       }
       finally {
             echo '********* Unit Test Application Test Report **********'
-            sh 'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
+            sh  ''' source activate ${BUILD_TAG}
+                    python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml
+                '''
             always {junit allowEmptyResults: true, testResults: 'test-reports/unit_tests.xml'}
             currentResult = currentBuild.result
             sh 'echo $currentResult'
