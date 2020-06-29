@@ -1,5 +1,6 @@
 node  {
       def build_ok = true
+      def currentResult = 'SUCCESS'
 
       stage ('Git Checkout') {
             checkout scm
@@ -29,6 +30,14 @@ node  {
         build_ok = false
         echo e.toString()
       }
+      finally {
+            echo '********* Unit Test Application Test Report **********'
+            sh 'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
+            always {junit allowEmptyResults: true, testResults: 'test-reports/unit_tests.xml'}
+            currentResult = currentBuild.result
+            sh 'echo $currentResult'
+            echo '********* Finished **********'
+      }
 
       stage('Push Docker Image') {
             echo '********* Pushing docker image to docker hub **********'
@@ -44,5 +53,11 @@ node  {
             echo '********* Deployment Stage Started **********'
             sh "docker run -p 5000:5000 --name flask-app -d flask-app "
             echo '********* Deployment Stage Finished **********'
+      }
+
+      if(build_ok) {
+        currentBuild.result = "SUCCESS"
+      } else {
+        currentBuild.result = "FAILURE"
       }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<testsuite errors="0" failures="0" name="FlaskApp-20200629193035" tests="4" time="0.108">
+	<testcase classname="FlaskApp" name="test_all" time="0.105"/>
+	<testcase classname="FlaskApp" name="test_hello" time="0.001"/>
+	<testcase classname="FlaskApp" name="test_hello_index" time="0.001"/>
+	<testcase classname="FlaskApp" name="test_hello_random" time="0.001"/>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>
