@@ -17,7 +17,6 @@ node  {
             sh 'echo $JENKINS_USER'
             sh 'echo ${BUILD_NUMBER}'
             sh 'echo ${BUILD_TAG}'
-            sh 'pip list -format=columns'
       }
 
       try {
@@ -34,6 +33,7 @@ node  {
       }
       finally {
             echo '********* Unit Test Application Test Report **********'
+            sh 'pip list -format=columns'
             sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
             always {junit allowEmptyResults: true, testResults: 'test-reports/unit_tests.xml'}
             currentResult = currentBuild.result
