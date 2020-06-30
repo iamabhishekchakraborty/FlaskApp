@@ -33,9 +33,11 @@ node  {
       }
       finally {
             echo '********* Unit Test Application Test Report **********'
-            sh 'pip list -format=columns'
-            sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
-            always {junit allowEmptyResults: true, testResults: 'test-reports/unit_tests.xml'}
+            docker.image('qnib/pytest')
+            sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
+            // sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
+            // Archive unit tests for the future
+            always {junit allowEmptyResults: true, fingerprint: true, testResults: 'test-reports/unit_tests.xml'}
             currentResult = currentBuild.result
             sh 'echo $currentResult'
             echo '********* Finished **********'
@@ -53,7 +55,7 @@ node  {
 
       stage('Run docker') {
             echo '********* Deployment Stage Started **********'
-            sh "docker run -p 8000:8000 --name flask-app -d flask-app "
+            sh "docker run -p 8000:8000 --name flask-app -d flask-app"
             echo '********* Deployment Stage Finished **********'
       }
 

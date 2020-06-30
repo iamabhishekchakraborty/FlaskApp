@@ -8,14 +8,15 @@ ENV APP_SETTINGS="config.DevelopmentConfig"
 ENV FLASK_RUN_PORT=8000
 
 RUN mkdir /app
-WORKDIR /app
-COPY . /app
-
-ENV VIRTUAL_ENV=$WORKDIR/venv
+COPY requirements.txt /app/
+ENV VIRTUAL_ENV=/app/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+WORKDIR /app
 
 RUN pip install -r requirements.txt
+
+COPY . /app
 
 # Set a health check for the container (for Docker to be able to tell if the server is actually up or not)
 HEALTHCHECK --interval=5s \
