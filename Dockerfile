@@ -11,6 +11,10 @@ RUN mkdir /app
 WORKDIR /app
 COPY . /app
 
+ENV VIRTUAL_ENV=$WORKDIR/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
 RUN pip install -r requirements.txt
 
 # Set a health check for the container (for Docker to be able to tell if the server is actually up or not)

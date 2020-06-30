@@ -17,6 +17,7 @@ node  {
             sh 'echo $JENKINS_USER'
             sh 'echo ${BUILD_NUMBER}'
             sh 'echo ${BUILD_TAG}'
+            sh 'pip list -format=columns'
       }
 
       try {
@@ -33,9 +34,7 @@ node  {
       }
       finally {
             echo '********* Unit Test Application Test Report **********'
-            sh  ''' source activate ${BUILD_TAG}
-                    python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml
-                '''
+            sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
             always {junit allowEmptyResults: true, testResults: 'test-reports/unit_tests.xml'}
             currentResult = currentBuild.result
             sh 'echo $currentResult'
@@ -54,7 +53,7 @@ node  {
 
       stage('Run docker') {
             echo '********* Deployment Stage Started **********'
-            sh "docker run -p 5000:5000 --name flask-app -d flask-app "
+            sh "docker run -p 8000:8000 --name flask-app -d flask-app "
             echo '********* Deployment Stage Finished **********'
       }
 
