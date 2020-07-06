@@ -26,6 +26,18 @@ node  {
                 def app
                 app = docker.build("flask-app")
                 echo '********* Build Stage Finished **********'
+                echo '********* Unit Test Application Test Report **********'
+                docker.image('qnib/pytest')
+                app.inside {
+                    sh 'make test_pytest'
+                }
+                //sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
+                // sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
+                // Archive unit tests for the future
+                always {junit allowEmptyResults: true, fingerprint: true, testResults: 'test-reports/unit_tests.xml'}
+                currentResult = currentBuild.result
+                sh 'echo $currentResult'
+                echo '********* Finished **********'
           }
       }
       catch(e) {
@@ -33,18 +45,7 @@ node  {
         echo e.toString()
       }
       finally {
-            echo '********* Unit Test Application Test Report **********'
-            docker.image('qnib/pytest')
-            app.inside {
-                sh 'make test_pytest'
-            }
-            //sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
-            // sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
-            // Archive unit tests for the future
-            always {junit allowEmptyResults: true, fingerprint: true, testResults: 'test-reports/unit_tests.xml'}
-            currentResult = currentBuild.result
-            sh 'echo $currentResult'
-            echo '********* Finished **********'
+            echo '********* Final Block **********'
       }
 
       stage('Push Docker Image') {
