@@ -12,9 +12,9 @@ node  {
       }
 
       stage('Verify Branch') {
-            sh 'echo $GIT_BRANCH'
-            echo "This job was triggered by a Git push to branch: ${env.BRANCH_NAME}"
-            sh 'echo $JENKINS_USER'
+            sh 'echo ${GIT_BRANCH}'
+            echo "This job was triggered by a Git push to branch: ${BRANCH_NAME}"
+            sh 'echo ${JENKINS_USER}'
             sh 'echo ${BUILD_NUMBER}'
             sh 'echo ${BUILD_TAG}'
             sh 'echo ${BUILD_ID}'
@@ -27,16 +27,19 @@ node  {
                 app = docker.build("flask-app")
                 echo '********* Build Stage Finished **********'
                 echo '********* Unit Test Application Test Report **********'
-                docker.image('qnib/pytest')
+                // docker.image('qnib/pytest')
                 app.inside {
                     sh 'make test_pytest'
+                    sh 'make test_unittest'
+                    sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
+                    sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
                 }
-                //sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
+                // sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
                 // sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
                 // Archive unit tests for the future
                 always {junit allowEmptyResults: true, fingerprint: true, testResults: 'test-reports/unit_tests.xml'}
                 currentResult = currentBuild.result
-                sh 'echo $currentResult'
+                sh 'echo ${currentResult}'
                 echo '********* Finished **********'
           }
       }
@@ -55,12 +58,6 @@ node  {
 
       stage ('Deploy') {
             echo '********* Deployment Stage Started **********'
-            echo '********* Deployment Stage Finished **********'
-      }
-
-      stage('Run docker') {
-            echo '********* Deployment Stage Started **********'
-            sh "docker run -p 8000:8000 --name flask-app -d flask-app"
             echo '********* Deployment Stage Finished **********'
       }
 

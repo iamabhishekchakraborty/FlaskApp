@@ -3,7 +3,6 @@ FROM python:3.6.4
 MAINTAINER Abhishek
 
 ENV JENKINS_USER="abhishek"
-ENV JENKINS_PASS="admin"
 ENV APP_SETTINGS="config.DevelopmentConfig"
 ENV FLASK_RUN_PORT=8000
 ENV FLASK_RUN_HOST 0.0.0.0
