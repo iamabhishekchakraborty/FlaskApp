@@ -5,7 +5,7 @@ help:
 	@echo "        Run unit tests (unittest) on the application"
 
 test_pytest:
-    python3 -m pytest -vv
+	python3 -m pytest -vv
 
 test_unittest:
-    python3 unittest_flaskapp.py
+	python3 unittest_flaskapp.py
