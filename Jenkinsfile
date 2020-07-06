@@ -17,6 +17,7 @@ node  {
             sh 'echo $JENKINS_USER'
             sh 'echo ${BUILD_NUMBER}'
             sh 'echo ${BUILD_TAG}'
+            sh 'echo ${env.BUILD_ID}'
       }
 
       try {
@@ -34,7 +35,10 @@ node  {
       finally {
             echo '********* Unit Test Application Test Report **********'
             docker.image('qnib/pytest')
-            sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
+            app.inside {
+                sh 'make test_pytest'
+            }
+            //sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
             // sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
             // Archive unit tests for the future
             always {junit allowEmptyResults: true, fingerprint: true, testResults: 'test-reports/unit_tests.xml'}

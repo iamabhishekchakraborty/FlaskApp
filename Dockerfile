@@ -6,6 +6,7 @@ ENV JENKINS_USER="abhishek"
 ENV JENKINS_PASS="admin"
 ENV APP_SETTINGS="config.DevelopmentConfig"
 ENV FLASK_RUN_PORT=8000
+ENV FLASK_RUN_HOST 0.0.0.0
 
 RUN mkdir /app
 COPY requirements.txt /app/
@@ -14,7 +15,8 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 WORKDIR /app
 
-RUN pip install -r requirements.txt
+RUN apt-get update -y && \
+    pip install -r requirements.txt
 
 COPY . /app
 
