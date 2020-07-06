@@ -17,7 +17,7 @@ node  {
             sh 'echo $JENKINS_USER'
             sh 'echo ${BUILD_NUMBER}'
             sh 'echo ${BUILD_TAG}'
-            sh 'echo ${env.BUILD_ID}'
+            sh 'echo ${BUILD_ID}'
       }
 
       try {
