@@ -4,6 +4,7 @@ node  {
 
       stage ('Git Checkout') {
             checkout scm
+            sh 'printenv'
       }
 
       stage('Initialize') {
@@ -13,7 +14,7 @@ node  {
 
       stage('Verify Branch') {
             sh 'echo ${GIT_BRANCH}'
-            echo "This job was triggered by a Git push to branch: ${BRANCH_NAME}"
+            echo "This job was triggered by a Git push to branch: "+ env.GIT_BRANCH
             sh 'echo ${JENKINS_USER}'
             sh 'echo ${BUILD_NUMBER}'
             sh 'echo ${BUILD_TAG}'
