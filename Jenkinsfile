@@ -4,6 +4,8 @@ node  {
       def build_ok = true
       def currentResult = 'SUCCESS'
       def app
+      def registry = "iamabhishekdocker/flask-app"
+      def registryCredential = 'docker-hub-credentials'
 
       try {
           stage ('Git Checkout Source Code') {
@@ -14,7 +16,7 @@ node  {
           stage('Verify Branch and Print Env after source checkout') {
                 echo "Branch Name: ${env.BRANCH_NAME}"
                 echo "This job was triggered by a Git push to branch: "+ env.GIT_BRANCH
-                sh 'echo ${JENKINS_USER}'
+                sh 'echo ${USER}'
                 sh 'echo ${BUILD_NUMBER}'
                 sh 'echo ${BUILD_TAG}'
                 sh 'echo ${BUILD_ID}'
@@ -53,7 +55,7 @@ node  {
 
           stage('Push Docker Image') {
                 echo '********* Pushing docker image to docker hub **********'
-                docker.withRegistry('https://registry-1.docker.io/v2/', 'docker-hub-credentials') {
+                docker.withRegistry('https://index.docker.io/v1', registryCredential) {
                     app.push()
                 }
                 echo '********* Finished **********'
