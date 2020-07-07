@@ -1,33 +1,42 @@
+#!groovy
+
 node  {
       def build_ok = true
       def currentResult = 'SUCCESS'
-
-      stage ('Git Checkout') {
-            checkout scm
-            sh 'printenv'
-      }
-
-      stage('Initialize') {
-            def dockerHome = tool 'gcp-docker'
-            env.PATH = "${dockerHome}/bin:${env.PATH}"
-      }
-
-      stage('Verify Branch') {
-            sh 'echo ${GIT_BRANCH}'
-            echo "This job was triggered by a Git push to branch: "+ env.GIT_BRANCH
-            sh 'echo ${JENKINS_USER}'
-            sh 'echo ${BUILD_NUMBER}'
-            sh 'echo ${BUILD_TAG}'
-            sh 'echo ${BUILD_ID}'
-      }
+      def app
 
       try {
+          stage ('Git Checkout Source Code') {
+                echo "Checking out source code"
+                checkout scm
+          }
+
+          stage('Verify Branch and Print Env after source checkout') {
+                echo "Branch Name: ${env.BRANCH_NAME}"
+                echo "This job was triggered by a Git push to branch: "+ env.GIT_BRANCH
+                sh 'echo ${JENKINS_USER}'
+                sh 'echo ${BUILD_NUMBER}'
+                sh 'echo ${BUILD_TAG}'
+                sh 'echo ${BUILD_ID}'
+                sh 'printenv'
+          }
+
+          stage('Initialize') {
+                def dockerHome = tool 'gcp-docker'
+                env.PATH = "${dockerHome}/bin:${env.PATH}"
+          }
+
           stage('Build Docker') {
-                echo '********* Build Stage Started **********'
-                def app
-                app = docker.build("flask-app")
-                echo '********* Build Stage Finished **********'
-                echo '********* Unit Test Application Test Report **********'
+                    echo '********* Build Stage Started **********'
+                    app = docker.build("flask-app")
+                    echo '********* Build Stage Finished **********'
+                    echo '********* Unit Test Application **********'
+
+                    currentResult = currentBuild.result
+                    sh 'echo ${currentResult}'
+          }
+
+          stage('Unit Test Application') {
                 // docker.image('qnib/pytest')
                 app.inside {
                     sh 'make test_pytest'
@@ -39,9 +48,25 @@ node  {
                 // sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
                 // Archive unit tests for the future
                 always {junit allowEmptyResults: true, fingerprint: true, testResults: 'test-reports/unit_tests.xml'}
-                currentResult = currentBuild.result
-                sh 'echo ${currentResult}'
                 echo '********* Finished **********'
+          }
+
+          stage('Push Docker Image') {
+                echo '********* Pushing docker image to docker hub **********'
+                docker.withRegistry('https://registry-1.docker.io/v2/', 'docker-hub-credentials') {
+                    app.push()
+                }
+                echo '********* Finished **********'
+          }
+
+          stage ('Deploy') {
+                echo '********* Deployment Stage Started **********'
+                echo '********* Deployment Stage Finished **********'
+          }
+
+          stage ('Cleanup') {
+                echo '********* Cleanup environment Started **********'
+                echo '********* Cleanup environment Finished **********'
           }
       }
       catch(e) {
@@ -49,17 +74,7 @@ node  {
         echo e.toString()
       }
       finally {
-            echo '********* Final Block **********'
-      }
-
-      stage('Push Docker Image') {
-            echo '********* Pushing docker image to docker hub **********'
-            echo '********* Finished **********'
-      }
-
-      stage ('Deploy') {
-            echo '********* Deployment Stage Started **********'
-            echo '********* Deployment Stage Finished **********'
+            echo '********* Build and Test Success, Send Notification **********'
       }
 
       if(build_ok) {

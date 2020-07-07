@@ -99,6 +99,19 @@ celerybeat-schedule
 
 # Environments
 .env
+**/**/.env
+**/*/.env
+**/.env
+*/**/.env
+*/*/.env
+*/.env
+.env*
+**/**/.env*
+**/*/.env*
+**/.env*
+*/**/.env*
+*/*/.env*
+*/.env*
 .venv
 env/
 venv/
@@ -124,6 +137,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Key
+# SSH KEYS
 *.ppk
 *key*
+instance-gcp-jenkins*
