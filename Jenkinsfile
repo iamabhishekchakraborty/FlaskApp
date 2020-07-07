@@ -56,7 +56,8 @@ node  {
           stage('Push Docker Image') {
                 echo '********* Pushing docker image to docker hub **********'
                 docker.withRegistry('https://index.docker.io/v1', registryCredential) {
-                    app.push()
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
                 }
                 echo '********* Finished **********'
           }
