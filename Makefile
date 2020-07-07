@@ -41,3 +41,8 @@ system-prune:
 	echo "y" | $(DOCKER) system prune
 
 clean: remove system-prune
+
+.PHONY: pull-merge-push
+
+pull-merge-push:
+	bash -c "scripts/pull-merge-push-gitbranch.sh"

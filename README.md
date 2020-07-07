@@ -13,6 +13,16 @@
     ```
 2. jenkins builds and tests the changes 
 3. if test passes jenkins pushes the code to master
+    ```bash
+    git checkout test
+    git pull
+    git checkout master
+    git pull
+    git merge --no-ff --no-commit test
+    git status
+    git commit -m 'merge test branch'
+    git push
+    ```
 4. deploy changes to app engine(gcp) when latest commit to master branch is pushed
 
 

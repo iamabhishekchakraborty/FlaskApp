@@ -61,6 +61,12 @@ node  {
                 echo '********* Finished **********'
           }
 
+          stage ('Push code to Master branch') {
+                echo '********* Pushing latest code to master branch (git) Started **********'
+                sh 'make pull-merge-push'
+                echo '********* Finished **********'
+          }
+
           stage ('Deploy') {
                 echo '********* Deployment Stage Started **********'
                 echo '********* Deployment Stage Finished **********'
