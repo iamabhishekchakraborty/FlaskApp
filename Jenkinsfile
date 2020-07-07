@@ -30,9 +30,8 @@ node  {
 
           stage('Build Docker') {
                     echo '********* Build Stage Started **********'
-                    app = docker.build("flask-app")
+                    app = docker.build("iamabhishekdocker/flask-app")
                     echo '********* Build Stage Finished **********'
-                    echo '********* Unit Test Application **********'
 
                     currentResult = currentBuild.result
                     sh 'echo ${currentResult}'
@@ -55,7 +54,7 @@ node  {
 
           stage('Push Docker Image') {
                 echo '********* Pushing docker image to docker hub **********'
-                docker.withRegistry(registry, registryCredential) {
+                docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                 }
