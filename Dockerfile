@@ -18,6 +18,7 @@ RUN apt-get update -y && \
     pip install -r requirements.txt
 
 COPY . /app
+RUN chmod +x scripts/pull-merge-push-gitbranch.sh
 
 # Set a health check for the container (for Docker to be able to tell if the server is actually up or not)
 HEALTHCHECK --interval=5s \
