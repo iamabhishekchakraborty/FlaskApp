@@ -6,6 +6,7 @@ node  {
       def app
       def registry = "iamabhishekdocker/flask-app"
       def registryCredential = 'docker-hub-credentials'
+      git url: 'https://github.com/iamabhishekchakraborty/FlaskApp.git'
 
       try {
           stage ('Git Checkout Source Code') {
@@ -63,7 +64,18 @@ node  {
 
           stage ('Push code to Master branch') {
                 echo '********* Pushing latest code to master branch (git) Started **********'
-                sh 'make pull-merge-push'
+                //sh 'make pull-merge-push'
+                sshagent(['GitHubJenkinsToken']) {
+                    sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
+                    sh 'git checkout test'
+                    sh 'git pull'
+                    sh 'git checkout master'
+                    sh 'git pull'
+                    sh 'git merge --no-ff --no-commit test'
+                    sh 'git status'
+                    sh "git commit -m 'merge test branch'"
+                    sh 'git push'
+                }
                 echo '********* Finished **********'
           }
 

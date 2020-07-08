@@ -23,6 +23,13 @@
     git commit -m 'merge test branch'
     git push
     ```
+Note: if the entire git operation is to be carried out by sh script need to make the script executable.
+    ```bash
+    git update-index --chmod=+x scripts/pull-merge-push-gitbranch.sh   
+    git commit -m "<comments>"
+    git ls-files --stage (just to verify the chmod changes)
+    git push -u origin <test branch>
+    ```  
 4. deploy changes to app engine(gcp) when latest commit to master branch is pushed
 
 
