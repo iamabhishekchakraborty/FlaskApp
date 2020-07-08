@@ -65,7 +65,7 @@ node  {
           stage ('Push code to Master branch') {
                 echo '********* Pushing latest code to master branch (git) Started **********'
                 //sh 'make pull-merge-push'
-                sshagent(['GitHubJenkinsToken']) {
+                withCredentials(['GitHubJenkinsToken']) {
                     sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
                     sh 'git checkout test'
                     sh 'git pull'
