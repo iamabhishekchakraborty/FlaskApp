@@ -70,11 +70,11 @@ node  {
                     sh 'git checkout test'
                     sh 'git pull'
                     sh 'git checkout master'
-                    sh 'git pull'
+                    sh 'git pull origin master'
                     sh 'git merge --no-ff --no-commit test'
                     sh 'git status'
                     sh "git commit -m 'merge test branch'"
-                    sh 'git push'
+                    sh 'git push origin master'
                 }
                 echo '********* Finished **********'
           }
