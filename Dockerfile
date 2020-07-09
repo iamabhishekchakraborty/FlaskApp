@@ -1,24 +1,30 @@
-FROM python:3.6.9
+FROM python:3.6.4
+
 MAINTAINER Abhishek
 
-## RUN apt-get update && apt-get install -y python3 python3-pip
-## RUN python3 -m pip install --upgrade pip
-## RUN pip3 install rasa
-# RUN pip3 install spacy
+ENV JENKINS_USER="jenkins"
+ENV APP_SETTINGS="config.DevelopmentConfig"
+ENV FLASK_RUN_PORT=8000
+ENV FLASK_RUN_HOST 0.0.0.0
 
-# # Download and link spaCy model
-# RUN python3 -m spacy download en_core_web_md
-# RUN python3 -m spacy link en_core_web_md en
+RUN mkdir /app
+COPY requirements.txt /app/
+ENV VIRTUAL_ENV=/app/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+WORKDIR /app
 
-# ADD ./models /app/models/
-# ADD ./config /app/config/
-# ADD ./actions /app/actions/
-# ADD ./scripts /app/scripts/
-# ADD ./data /app/data/
-# ADD ./domain.yml /app/
-# ADD ./config.yml /app/
+RUN apt-get update -y && \
+    pip install -r requirements.txt
 
-## RUN chmod +x /app/scripts/*
+COPY . /app
 
-# ENTRYPOINT []
-# CMD /app/scripts/start_services.sh
+# Set a health check for the container (for Docker to be able to tell if the server is actually up or not)
+HEALTHCHECK --interval=5s \
+            --timeout=5s \
+            CMD curl -f http://127.0.0.1:8000 || exit 1
+
+# tell docker what port to expose
+EXPOSE  8000
+
+CMD ["python3", "app.py"]
