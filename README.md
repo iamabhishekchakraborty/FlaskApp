@@ -17,11 +17,11 @@
     git checkout test
     git pull
     git checkout master
-    git pull
+    git pull origin master
     git merge --no-ff --no-commit test
     git status
     git commit -m 'merge test branch'
-    git push
+    git push origin master
     ```
 Note: if the entire git operation is to be carried out by sh script need to make the script executable.
     ```bash
