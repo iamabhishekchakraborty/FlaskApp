@@ -66,7 +66,8 @@ node  {
                 echo '********* Pushing latest code to master branch (git) Started **********'
                 //sh 'make pull-merge-push'
                 sshagent (credentials: ['github-jenkins-sshkey']) {
-                    sh """git checkout test
+                    sh """git remote set-url origin git@github.com:iamabhishekchakraborty/FlaskApp.git
+                          git checkout test
                           git pull
                           git checkout master
                           git pull origin master
