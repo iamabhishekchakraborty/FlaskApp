@@ -66,14 +66,15 @@ node  {
                 echo '********* Pushing latest code to master branch (git) Started **********'
                 //sh 'make pull-merge-push'
                 sshagent (credentials: ['github-jenkins-sshkey']) {
-                    sh 'git checkout test'
-                    sh 'git pull'
-                    sh 'git checkout master'
-                    sh 'git pull origin master'
-                    sh 'git merge --no-ff --no-commit test'
-                    sh 'git status'
-                    sh "git commit -m 'merge test branch'"
-                    sh 'git push origin master'
+                    sh """git checkout test
+                          git pull
+                          git checkout master
+                          git pull origin master
+                          git merge --no-ff --no-commit test
+                          git status
+                          git commit -m 'merge test branch'
+                          git push origin master
+                       """
                 }
                 echo '********* Finished **********'
           }
