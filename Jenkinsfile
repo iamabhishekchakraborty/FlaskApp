@@ -83,7 +83,6 @@ node  {
                 echo '********* Deployment Stage Started **********'
                 app.inside('-v /tmp:/tmp') {
                     echo "inside docker"
-                    sh "curl -f http://0.0.0.0:8000"
                 }
                 container('gcloud') {
                     sh "gcloud compute zones --help"
