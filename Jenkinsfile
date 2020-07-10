@@ -71,9 +71,8 @@ node  {
                           git pull
                           git checkout master
                           git pull origin master
-                          git merge --no-ff --no-commit test
+                          git merge test
                           git status
-                          git commit -m 'merge test branch with master'
                           git push origin master
                        """
                 }
