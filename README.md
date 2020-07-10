@@ -3,7 +3,7 @@
 1. push changes (and commit) to git
 ##create new branch with name <test>, adding all of the changes that you have made in master branch to this new branch
     ```bash
-    git checkout -b <test>
+    git checkout -b <test> origin/master
     git add .
     git commit -m "<comments for the changes made>"
     ```
