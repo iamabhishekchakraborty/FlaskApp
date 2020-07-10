@@ -73,9 +73,7 @@ node  {
                           git pull origin master
                           git merge --no-ff --no-commit test
                           git status
-                          git config --global user.name 'iamabhishekchakraborty'
-                          git config --global user.email abhis64673@gmail.com
-                          git commit -m 'merge test branch'
+                          git commit -m 'merge test branch with master'
                           git push origin master
                        """
                 }
