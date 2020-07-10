@@ -12,7 +12,7 @@
     git push -u origin <test>
     ```
 2. jenkins builds and tests the changes 
-3. if test passes jenkins pushes the code to master
+3. if test passes jenkins pushes the code to master branch
     ```bash
     git checkout test
     git pull
@@ -30,8 +30,7 @@ Note: if the entire git operation is to be carried out by sh script need to make
     git ls-files --stage (just to verify the chmod changes)
     git push -u origin <test branch>
     ```  
-4. deploy changes to app engine(gcp) when latest commit to master branch is pushed
-
+4. deploy docker image to site servers 
 
 # Set up Jenkins on Google Compute Engine so that it will be available on static IP
 Steps to create GCE Virtual Machine
