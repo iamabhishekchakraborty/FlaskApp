@@ -1,4 +1,8 @@
 pipeline  {
+   environment {
+        registry = "iamabhishekdocker/flask-app"
+        registryCredential = 'docker-hub-credentials'
+   }
    agent none
    //{
    //   dockerfile true
@@ -6,28 +10,32 @@ pipeline  {
    stages {
       stage ('Git Checkout') {
          steps {
+            echo "Checking out source code"
             checkout scm
          }
       }
       stage('Initialize') {
         steps {
-            def dockerHome = tool 'myDocker'
+            def dockerHome = tool 'gcp-docker'
             env.PATH = "${dockerHome}/bin:${env.PATH}"
         }
       }
       stage('Verify Branch') {
          steps {
-            echo "$GIT_BRANCH"
-            echo "This job was triggered by a Git push to branch: ${env.BRANCH_NAME}"
-            sh 'echo $JENKINS_USER'
+            echo "Branch Name: ${env.BRANCH_NAME}"
+            echo "This job was triggered by a Git push to branch: "+ env.GIT_BRANCH
+            sh 'echo ${USER}'
             sh 'echo ${BUILD_NUMBER}'
+            sh 'echo ${BUILD_TAG}'
+            sh 'echo ${BUILD_ID}'
+            sh 'printenv'
          }
       }
       stage('Build Docker') {
         agent any
         steps {
             echo '********* Build Stage Started **********'
-            sh '"docker build -t flask-app ."'
+            sh '"docker build -t iamabhishekdocker/flask-app ."'
             echo '********* Build Stage Finished **********'
         }
       }
@@ -46,7 +54,7 @@ pipeline  {
       stage('Run docker') {
         steps {
             echo '********* Deployment Stage Started **********'
-            sh "docker run -p 5000:5000 --name flask-app -d flask-app "
+            sh "docker run -p 5000:5000 --name iamabhishekdocker/flask-app -d flask-app "
             echo '********* Deployment Stage Finished **********'
         }
       }

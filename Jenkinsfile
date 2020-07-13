@@ -40,7 +40,7 @@ node  {
 
           stage('Unit Test Application') {
                 // docker.image('qnib/pytest')
-                app.inside {
+                docker.image('iamabhishekdocker/flask-app:${env.BUILD_NUMBER}').inside {
                     sh 'make test_pytest'
                     sh 'make test_unittest'
                     sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
@@ -81,12 +81,13 @@ node  {
 
           stage ('Deploy') {
                 echo '********* Deployment Stage Started **********'
-                app.inside('-v /tmp:/tmp') {
+                docker.image('iamabhishekdocker/flask-app:${env.BUILD_NUMBER}').inside('-v /tmp:/tmp') {
                     echo "inside docker"
+                    sh "hostname"
                 }
-                container('gcloud') {
-                    sh "gcloud compute zones --help"
-                }
+                //container('gcloud') {
+                //    sh "gcloud compute zones --help"
+                //}
                 echo '********* Deployment Stage Finished **********'
           }
 

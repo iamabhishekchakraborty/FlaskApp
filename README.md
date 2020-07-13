@@ -131,6 +131,17 @@ If you want to run docker as non-root user then you need to add it to the docker
     docker run hello-world
     ```
 
+# Setting up Chrome Remote Desktop for Linux on Compute Engine
+Steps needed to set up the Chrome Remote Desktop service on a Debian Linux virtual machine (VM) instance on Compute Engine. 
+Chrome Remote Desktop allows you to remotely access applications with a graphical user interface from a local computer or mobile device
+1. Create a headless Compute Engine VM instance to run Chrome Remote Desktop on.
+2. Install and configure the Chrome Remote Desktop service on the VM instance.
+3. Set up an X Window System desktop environment in the VM instance.
+4. Connect from your local computer to the desktop environment on the VM instance (https://remotedesktop.google.com/).
+
+Link - https://cloud.google.com/solutions/chrome-desktop-remote-on-compute-engine
+
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)        
