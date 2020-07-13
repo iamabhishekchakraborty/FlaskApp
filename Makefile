@@ -2,6 +2,8 @@ PROJECT_NAME = flask-app
 CI_SERVER = jenkins
 DOCKER = docker
 DOCKER_COMPOSE = docker-compose
+IMAGE = iamabhishekdocker/flask-app
+TAG = BUILD_NUMBER
 
 .PHONY: help test_pytest test_unittest
 
@@ -46,3 +48,15 @@ clean: remove system-prune
 
 pull-merge-push:
 	bash -c "scripts/pull-merge-push-gitbranch.sh"
+
+ifeq ($(shell uname -s),Darwin)
+    STAT_OPT = -f
+else
+    STAT_OPT = -c
+endif
+
+.PHONY: run
+
+DOCKER_RUN=docker run --rm -p 127.0.0.1:8000:8000 -v /var/run/docker.sock:/var/run/docker.sock --group-add=$(shell stat $(STAT_OPT) %g /var/run/docker.sock)
+run:
+	$(DOCKER_RUN) $(IMAGE):$(TAG)
