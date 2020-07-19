@@ -84,7 +84,11 @@ node  {
                 app.inside() {
                     echo "inside docker"
                     sh "hostname"
-                    sh 'make run TAG=${env.BUILD_NUMBER}'
+                    //sh 'make run TAG=${env.BUILD_NUMBER}'
+                    timestamps {
+                        stage "Sleeping"
+                        sleep 60
+                    }
                 }
                 //container('gcloud') {
                 //    sh "gcloud compute zones --help"
