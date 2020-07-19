@@ -57,6 +57,6 @@ endif
 
 .PHONY: run
 
-DOCKER_RUN=$(DOCKER) run --rm -p 127.0.0.1:8000:8000 -v /var/run/docker.sock:/var/run/docker.sock --group-add=$(shell stat $(STAT_OPT) %g /var/run/docker.sock)
+DOCKER_RUN=$(DOCKER) run --rm -p 127.0.0.1:5000:5000 -v /var/run/docker.sock:/var/run/docker.sock --group-add=$(shell stat $(STAT_OPT) %g /var/run/docker.sock)
 run:
 	$(DOCKER_RUN) $(IMAGE):$(TAG)

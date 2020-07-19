@@ -27,7 +27,7 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
-    FLASK_RUN_PORT = 8000
+    FLASK_RUN_PORT = 5000
 
 
 class TestingConfig(Config):
