@@ -141,7 +141,13 @@ Chrome Remote Desktop allows you to remotely access applications with a graphica
 
 Link - https://cloud.google.com/solutions/chrome-desktop-remote-on-compute-engine
 
-
+# Setting up Google Cloud SDK
+Try installing google-cloud-sdk from anything other than apt to avoid - 
+    ERROR: (gcloud.components.update) 
+    You cannot perform this action because the Cloud SDK component manager 
+    is disabled for this installation.
+Install the Google Cloud SDK, initialize it, and run core gcloud commands from the command-line refer - 
+    https://cloud.google.com/sdk/docs/quickstart-linux
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)        

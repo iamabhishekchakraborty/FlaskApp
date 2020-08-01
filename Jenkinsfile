@@ -6,6 +6,7 @@ node  {
       def app
       def registry = "iamabhishekdocker/flask-app"
       def registryCredential = 'docker-hub-credentials'
+      def project_id = pyweb-flask-project
       git url: 'https://github.com/iamabhishekchakraborty/FlaskApp.git'
 
       try {
@@ -31,7 +32,7 @@ node  {
 
           stage('Build Docker') {
                     echo '********* Build Stage Started **********'
-                    app = docker.build("iamabhishekdocker/flask-app:${env.BUILD_NUMBER}")
+                    app = docker.build("gcr.io/"+{project_id}+"/flask-app:${env.BUILD_NUMBER}")
                     echo '********* Build Stage Finished **********'
 
                     currentResult = currentBuild.result
