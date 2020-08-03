@@ -113,16 +113,12 @@ node  {
             echo '********* Build Completed, Send Notification about Status**********'
             // Success or failure, always send notifications
             notifyBuild(currentBuild.result)
-            mail to: 'abhishek.chakraborthy@cesltd.com'
-                subject: "SUCCESSFUL: Build ${env.JOB_NAME}",
-                body: "Build Successful ${env.JOB_NAME} build no: ${env.BUILD_NUMBER}\n\nView the log at:\n ${env.BUILD_URL}\n\nBlue Ocean:\n${env.RUN_DISPLAY_URL}"
-            }
       }
 
       if(build_ok) {
         currentBuild.result = "SUCCESS"
       } else {
-        currentBuild.result = "FAILURE"
+        currentBuild.result = "FAILED"
       }
 }
 
