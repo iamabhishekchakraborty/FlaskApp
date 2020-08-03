@@ -6,7 +6,7 @@ node  {
       def app
       def registry = "iamabhishekdocker/flask-app"
       def registryCredential = 'docker-hub-credentials'
-      def project_id = pyweb-flask-project
+      def project_id = 'pyweb-flask-project'
       git url: 'https://github.com/iamabhishekchakraborty/FlaskApp.git'
 
       try {
