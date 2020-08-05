@@ -87,8 +87,9 @@ node  {
                     sh "hostname"
                     //sh 'make run TAG=${env.BUILD_NUMBER}'
                     timestamps {
-                        stage "Sleeping"
-                        sleep 60
+                        stage('Sleeping') {
+                            sleep 60
+                        }
                     }
                 }
                 //container('gcloud') {
@@ -150,6 +151,6 @@ def notifyBuild(String buildStatus = 'STARTED') {
   emailext (
       subject: subject,
       body: details,
-      recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+      recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
     )
 }
