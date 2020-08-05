@@ -32,8 +32,7 @@ node  {
 
           stage('Build Docker') {
                     echo '********* Build Stage Started **********'
-                    sh 'echo $project_id'
-                    app = docker.build("gcr.io/"+project_id+"/flask-app:${env.BUILD_NUMBER}")
+                    app = docker.build("iamabhishekdocker/flask-app:${env.BUILD_NUMBER}")
                     echo '********* Build Stage Finished **********'
 
                     currentResult = currentBuild.result
