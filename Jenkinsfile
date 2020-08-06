@@ -45,7 +45,7 @@ node  {
                     sh 'make test_pytest'
                     sh 'make test_unittest'
                     sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
-                    sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
+                    sh 'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
                 }
                 // sh 'py.test --verbose --junit-xml test-reports/unit_tests.xml tests/functional/test_flaskapp.py'
                 // sh  'python3 -m pytest --verbose --junit-xml test-reports/unit_tests.xml'
