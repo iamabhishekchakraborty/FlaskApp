@@ -61,6 +61,10 @@ Hit Create
     sudo apt update
     sudo apt install openjdk-8-jdk
     ```
+   Confirm the installation of Java
+    ```bash
+    java -version
+    ```   
 3. Add repository key to the system which we do by importing the GPG keys of the Jenkins
     wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
     Now to verify that it worked, run this command to list the keys added
@@ -100,6 +104,7 @@ Hit Create
 11. Open enter https://<External_IP of instance>:8080 in browser 
     or run curl -vvv <External_IP of instance>:8080                 
 
+Link - https://www.jenkins.io/doc/book/installing/#debianubuntu
 Link - https://medium.com/faun/jenkins-on-google-compute-engine-611bd86e295b
 
 Note: When you turn UFW on it denies any incoming connection. So, you need to disable it for port 22 and then you will be SSH to your machine again. To do so, you should edit your instance and run a Startup Script.

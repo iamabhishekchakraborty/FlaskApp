@@ -123,7 +123,9 @@ node  {
       }
 }
 
-def notifyBuild(String buildStatus = 'STARTED') {
+def notifyBuild(String buildStatus) {
+  echo '********* Sending Notification about Status Started**********'
+  sh 'echo ${buildStatus}'
   // build status of null means successful
   buildStatus = buildStatus ?: 'SUCCESS'
 
@@ -153,4 +155,5 @@ def notifyBuild(String buildStatus = 'STARTED') {
       body: details,
       recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
     )
+  echo '********* Sending Notification about Status Finished**********'
 }
