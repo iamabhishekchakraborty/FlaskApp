@@ -2,7 +2,7 @@
 
 node  {
       def build_ok = true
-      def currentResult = 'SUCCESS'
+      def currentResult = ''
       def app
       def registry = "iamabhishekdocker/flask-app"
       def registryCredential = 'docker-hub-credentials'
@@ -36,7 +36,7 @@ node  {
                     echo '********* Build Stage Finished **********'
 
                     currentResult = currentBuild.result
-                    sh 'echo ${currentResult}'
+                    echo "docker build result: ${currentResult}"
           }
 
           stage('Unit Test Application') {
@@ -125,7 +125,7 @@ node  {
 
 def notifyBuild(String buildStatus) {
   echo '********* Sending Notification about Status Started**********'
-  sh 'echo ${buildStatus}'
+  echo "current build status: ${buildStatus}"
   // build status of null means successful
   buildStatus = buildStatus ?: 'SUCCESS'
 
