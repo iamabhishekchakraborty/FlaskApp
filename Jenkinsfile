@@ -152,6 +152,7 @@ def notifyBuild(String buildStatus) {
 
   // Send notifications
   emailext (
+      from: "Jenkins Admin<abhishek.chakraborthy@cesltd.com>"
       subject: subject,
       body: details,
       recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
