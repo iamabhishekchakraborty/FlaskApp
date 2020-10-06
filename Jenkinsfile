@@ -1,8 +1,8 @@
 #!groovy
 
-node  {
+node('node') {
+      currentBuild.result = "SUCCESS"
       def build_ok = true
-      def currentResult = ''
       def app
       def registry = "iamabhishekdocker/flask-app"
       def registryCredential = 'docker-hub-credentials'
@@ -35,11 +35,13 @@ node  {
                     app = docker.build("iamabhishekdocker/flask-app:${env.BUILD_NUMBER}")
                     echo '********* Build Stage Finished **********'
 
-                    currentResult = currentBuild.result
-                    echo "docker build result: ${currentResult}"
+                    //currentResult = currentBuild.result
+                    echo "docker build result: ${currentBuild.result}"
           }
 
           stage('Unit Test Application') {
+                env.NODE_ENV = "test"
+                print "Environment will be : ${env.NODE_ENV}"
                 // docker.image('qnib/pytest')
                 app.inside {
                     sh 'make test_pytest'
