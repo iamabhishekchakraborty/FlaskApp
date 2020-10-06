@@ -31,6 +31,7 @@ Note: if the entire git operation is to be carried out by sh script need to make
     git push -u origin <test branch>
     ```  
 4. deploy docker image to site servers 
+5. send notification once the jenkins build is completed with the outcome of the build
 
 # Set up Jenkins on Google Compute Engine so that it will be available on static IP
 Steps to create GCE Virtual Machine
