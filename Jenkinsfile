@@ -10,10 +10,16 @@ node('node') {
       git url: 'https://github.com/iamabhishekchakraborty/FlaskApp.git'
 
       try {
+          // This displays colors using the 'xterm' ansi color map.
+          ansiColor('xterm') {
+            // Just some echoes to show the ANSI color.
+            stage "\u001B[31mI'm Red\u001B[0m Now not"
+            }
+
           stage ('Git Checkout Source Code') {
                 echo "Checking out source code"
                 checkout scm
-          }
+            }
 
           stage('Verify Branch and Print Env after source checkout') {
                 echo "Branch Name: ${env.BRANCH_NAME}"
@@ -23,12 +29,12 @@ node('node') {
                 sh 'echo ${BUILD_TAG}'
                 sh 'echo ${BUILD_ID}'
                 sh 'printenv'
-          }
+            }
 
           stage('Initialize') {
                 def dockerHome = tool 'gcp-docker'
                 env.PATH = "${dockerHome}/bin:${env.PATH}"
-          }
+            }
 
           stage('Build Docker') {
                     echo '********* Build Stage Started **********'
@@ -37,7 +43,7 @@ node('node') {
 
                     //currentResult = currentBuild.result
                     echo "docker build result: ${currentBuild.result}"
-          }
+            }
 
           stage('Unit Test Application') {
                 env.NODE_ENV = "test"
@@ -54,7 +60,7 @@ node('node') {
                 // Archive unit tests for the future
                 always {junit allowEmptyResults: true, fingerprint: true, testResults: 'test-reports/unit_tests.xml'}
                 echo '********* Finished **********'
-          }
+            }
 
           stage('Push Docker Image') {
                 echo '********* Pushing docker image to docker hub **********'
@@ -63,7 +69,7 @@ node('node') {
                         // app.push("latest")
                 }
                 echo '********* Finished **********'
-          }
+            }
 
           stage ('Push code to Master branch') {
                 echo '********* Pushing latest code to master branch (git) Started **********'
@@ -80,7 +86,7 @@ node('node') {
                        """
                 }
                 echo '********* Finished **********'
-          }
+            }
 
           stage ('Deploy') {
                 echo '********* Deployment Stage Started **********'
@@ -98,12 +104,12 @@ node('node') {
                 //    sh "gcloud compute zones --help"
                 //}
                 echo '********* Deployment Stage Finished **********'
-          }
+            }
 
           stage ('Cleanup') {
                 echo '********* Cleanup environment Started **********'
                 echo '********* Cleanup environment Finished **********'
-          }
+            }
       }
       catch(e) {
         // If there was an exception thrown, the build failed
