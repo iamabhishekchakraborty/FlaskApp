@@ -134,7 +134,7 @@ node('node') {
 
 def notifyBuild(String buildStatus) {
   echo '********* Sending Notification about Status Started**********'
-  echo "current build status: ${buildStatus}"
+  print "current build status: ${buildStatus}"
   // build status of null means successful
   buildStatus = buildStatus ?: 'SUCCESS'
 
