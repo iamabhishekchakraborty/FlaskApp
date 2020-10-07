@@ -96,7 +96,7 @@ node('node') {
                     //sh 'make run TAG=${env.BUILD_NUMBER}'
                     timestamps {
                         stage('Sleeping') {
-                            sleep 5
+                            sleep 10
                         }
                     }
                 }
