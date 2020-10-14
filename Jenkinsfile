@@ -72,22 +72,22 @@ node('node') {
                 echo '********* Finished **********'
             }
 
-          stage ('Push code to Master branch') {
-                echo '********* Pushing latest code to master branch (git) Started **********'
+          //stage ('Push code to Master branch') {
+          //      echo '********* Pushing latest code to master branch (git) Started **********'
                 //sh 'make pull-merge-push'
-                sshagent (credentials: ['github-jenkins-sshkey']) {
-                    sh """git remote set-url origin git@github.com:iamabhishekchakraborty/FlaskApp.git
-                          git checkout test
-                          git pull
-                          git checkout master
-                          git pull origin master
-                          git merge test
-                          git status
-                          git push origin master
-                       """
-                }
-                echo '********* Finished **********'
-            }
+          //      sshagent (credentials: ['github-jenkins-sshkey']) {
+          //          sh """git remote set-url origin git@github.com:iamabhishekchakraborty/FlaskApp.git
+          //               git checkout test
+          //                git pull
+          //                git checkout master
+          //                git pull origin master
+          //                git merge test
+          //                git status
+          //                git push origin master
+          //             """
+          //      }
+          //      echo '********* Finished **********'
+          //  }
 
           stage ('Deploy') {
                 echo '********* Deployment Stage Started **********'
