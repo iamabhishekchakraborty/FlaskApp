@@ -1,6 +1,6 @@
 #!groovy
 
-node('node') {
+node() {
       currentBuild.result = "SUCCESS"
       def build_ok = true
       def app
