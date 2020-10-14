@@ -19,6 +19,7 @@ node('node') {
           stage ('Git Checkout Source Code') {
                 echo "Checking out source code"
                 checkout scm
+                sh 'mvn clean install'
             }
 
           stage('Verify Branch and Print Env after source checkout') {
