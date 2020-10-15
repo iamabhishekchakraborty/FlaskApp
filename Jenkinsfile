@@ -10,16 +10,17 @@ node() {
       git url: 'https://github.com/iamabhishekchakraborty/FlaskApp.git'
 
       try {
-          // This displays colors using the 'xterm' ansi color map.
-          ansiColor('xterm') {
-            // Just some echoes to show the ANSI color.
-            stage "\u001B[31mIn Red\u001B[0m Now not"
+          stage('Color Encoding') {
+            // This displays colors using the 'xterm' ansi color map.
+            ansiColor('xterm') {
+                // Just some echoes to show the ANSI color.
+                stage "\u001B[31mIn Red\u001B[0m Now not"
             }
-
+          }
           stage ('Git Checkout Source Code') {
                 echo "Checking out source code"
                 checkout scm
-                sh 'mvn clean install'
+                //sh 'mvn clean install'
             }
 
           stage('Verify Branch and Print Env after source checkout') {
@@ -116,7 +117,7 @@ node() {
         // If there was an exception thrown, the build failed
         currentBuild.result = "FAILED"
         build_ok = false
-        echo e.toString()
+        echo "Error description: " + e.toString()
         throw e
       }
       finally {
