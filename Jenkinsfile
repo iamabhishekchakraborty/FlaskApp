@@ -7,6 +7,7 @@ node() {
       def registry = "iamabhishekdocker/flask-app"
       def registryCredential = 'docker-hub-credentials'
       def project_id = 'pyweb-flask-project'
+      git url: 'https://github.com/iamabhishekchakraborty/FlaskApp.git'
 
       try {
           stage('Color Encoding') {
@@ -20,12 +21,11 @@ node() {
                 echo "Checking out source code"
                 checkout scm
                 //sh 'mvn clean install'
-                git url: 'https://github.com/iamabhishekchakraborty/FlaskApp.git'
                 def v = version()
                 if (v) {
-                    echo "Building Version: ${v}"
+                    echo "Build Version: ${v}"
                 }
-            }
+          }
 
           stage('Verify Branch and Print Env after source checkout') {
                 echo "Branch Name: ${env.BRANCH_NAME}"
