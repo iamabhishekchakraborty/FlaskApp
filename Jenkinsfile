@@ -141,7 +141,7 @@ node() {
 }
 
 def version() {
-    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+    def matcher = readFile('Dockerfile') =~ 'FROM(.+)'
     matcher ? matcher[0][1] : null
 }
 
