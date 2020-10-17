@@ -7,7 +7,6 @@ node() {
       def registry = "iamabhishekdocker/flask-app"
       def registryCredential = 'docker-hub-credentials'
       def project_id = 'pyweb-flask-project'
-      git url: 'https://github.com/iamabhishekchakraborty/FlaskApp.git'
 
       try {
           stage('Color Encoding') {
@@ -21,6 +20,11 @@ node() {
                 echo "Checking out source code"
                 checkout scm
                 //sh 'mvn clean install'
+                git url: 'https://github.com/iamabhishekchakraborty/FlaskApp.git'
+                def v = version()
+                if (v) {
+                    echo "Building Version: ${v}"
+                }
             }
 
           stage('Verify Branch and Print Env after source checkout') {
@@ -42,7 +46,6 @@ node() {
                     echo '********* Build Stage Started **********'
                     app = docker.build("iamabhishekdocker/flask-app:${env.BUILD_NUMBER}")
                     echo '********* Build Stage Finished **********'
-
                     //currentResult = currentBuild.result
                     echo "docker build result: ${currentBuild.result}"
             }
@@ -88,7 +91,7 @@ node() {
                        """
                 }
                 echo '********* Finished **********'
-            }
+           }
 
           stage ('Deploy') {
                 echo '********* Deployment Stage Started **********'
@@ -101,6 +104,9 @@ node() {
                             sleep 5
                         }
                     }
+                }
+                docker.image("iamabhishekdocker/flask-app:${env.BUILD_NUMBER}").inside {
+                    sh "hostname"
                 }
                 //container('gcloud') {
                 //    sh "gcloud compute zones --help"
@@ -134,9 +140,14 @@ node() {
       }
 }
 
+def version() {
+    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+    matcher ? matcher[0][1] : null
+}
+
 def notifyBuild(String buildStatus) {
   echo '********* Sending Notification about Status Started**********'
-  print "current build status: ${buildStatus}"
+  echo "current build status: ${buildStatus}"
   // build status of null means successful
   buildStatus = buildStatus ?: 'SUCCESS'
 
