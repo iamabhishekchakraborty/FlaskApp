@@ -118,7 +118,7 @@ node() {
                 //    sh "gcloud compute zones --help"
                 //}
                 // sh './deploy production'
-                sh 'make deploy-site-servers'
+                sh 'make deploy-site-servers TAG=${env.BUILD_NUMBER}'
                 echo '********* Deployment Stage Finished **********'
             }
 
