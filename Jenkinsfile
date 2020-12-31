@@ -111,16 +111,17 @@ node() {
                         }
                     }
                 }
-                docker.image("iamabhishekdocker/flask-app:${env.BUILD_NUMBER}").inside {
-                    sh "hostname"
-                }
+                //docker.image("iamabhishekdocker/flask-app:${env.BUILD_NUMBER}").inside {
+                //    sh "hostname"
+                //}
+
                 //container('gcloud') {
                 //    sh "gcloud compute zones --help"
                 //}
                 // sh './deploy production'
-                echo 'IMAGE: iamabhishekdocker/flask-app:${env.BUILD_NUMBER}'
-                sh 'scripts/deploy-docker-heroku.sh iamabhishekdocker/flask-app:${env.BUILD_NUMBER} myflaskappsite'
-                sh 'make deploy-site-servers TAG=${env.BUILD_NUMBER}'
+                echo 'IMAGE: iamabhishekdocker/flask-app:${BUILD_NUMBER}'
+                sh 'scripts/deploy-docker-heroku.sh iamabhishekdocker/flask-app:${BUILD_NUMBER} myflaskappsite'
+                sh 'make deploy-site-servers TAG=${BUILD_NUMBER}'
                 echo '********* Deployment Stage Finished **********'
             }
 
