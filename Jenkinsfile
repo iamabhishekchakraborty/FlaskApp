@@ -25,6 +25,12 @@ node() {
                 if (v) {
                     echo "Build Version: ${v}"
                 }
+                // copy source code from local file system and test
+                // for a Dockerfile to build the Docker image
+                git ('https://github.com/iamabhishekchakraborty/FlaskApp.git')
+                if (!fileExists("Dockerfile")) {
+                    error('Dockerfile missing.')
+                }
           }
 
           stage('Verify Branch and Print Env after source checkout') {
@@ -111,6 +117,8 @@ node() {
                 //container('gcloud') {
                 //    sh "gcloud compute zones --help"
                 //}
+                // sh './deploy production'
+                sh 'make deploy-site-servers'
                 echo '********* Deployment Stage Finished **********'
             }
 

@@ -1,35 +1,35 @@
 # FlaskApp
---- proposed
+
 1. push changes (and commit) to git
-##create new branch with name <test>, adding all of the changes that you have made in master branch to this new branch
-    ```bash
-    git checkout -b <test> origin/master
-    git add .
-    git commit -m "<comments for the changes made>"
-    ```
-##creates your <test> on origin which is being followed with your branch. The -u is the same as --set-upstream
-    ```bash
-    git push -u origin <test>
-    ```
+   - create new branch with name <test>, adding all of the changes that you have made in master branch to this new branch
+		```bash
+		git checkout -b <test> origin/master
+		git add .
+		git commit -m "<comments for the changes made>"
+		```
+   - creates your <test> on origin which is being followed with your branch. The -u is the same as --set-upstream
+		```bash
+		git push -u origin <test>
+		```
 2. jenkins builds and tests the changes 
 3. if test passes jenkins pushes the code to master branch
-    ```bash
-    git checkout test
-    git pull
-    git checkout master
-    git pull origin master
-    git merge --no-ff --no-commit test
-    git status
-    git commit -m 'merge test branch'
-    git push origin master
-    ```
-Note: if the entire git operation is to be carried out by sh script need to make the script executable.
-    ```bash
-    git update-index --chmod=+x scripts/pull-merge-push-gitbranch.sh   
-    git commit -m "<comments>"
-    git ls-files --stage (just to verify the chmod changes)
-    git push -u origin <test branch>
-    ```  
+		```bash
+		git checkout test
+		git pull
+		git checkout master
+		git pull origin master
+		git merge --no-ff --no-commit test
+		git status
+		git commit -m 'merge test branch'
+		git push origin master
+		```
+	Note: if the entire git operation is to be carried out by sh script need to make the script executable.
+		```bash
+		git update-index --chmod=+x scripts/pull-merge-push-gitbranch.sh   
+		git commit -m "<comments>"
+		git ls-files --stage (just to verify the chmod changes)
+		git push -u origin <test branch>
+		```  
 4. deploy docker image to site servers 
 5. send notification once the jenkins build is completed with the outcome of the build
 
@@ -53,73 +53,78 @@ Hit Create. It will take a couple of minutes to create a VM
 4. For Target tags — enter http-server,https-server
 5. For Source filter — IP ranges and 0.0.0.0/0 in Source IP ranges(Traffic is only allowed from sources within these IP address ranges)
 6. For Protocols and ports — Specified protocols and ports must be selected and then check tcp and enter 8080
-Hit Create
+7. Hit Create
 
 # Install & Run Jenkins
 1. SSH to the VM
 2. Jenkins is Java coded, we need to install Java first
-    ```bash
-    sudo apt update
-    sudo apt install openjdk-8-jdk
-    ```
-   Confirm the installation of Java
-    ```bash
-    java -version
-    ```   
+		```bash
+		sudo apt update
+		sudo apt install openjdk-8-jdk
+		```
+   - Confirm the installation of Java
+		```bash
+		java -version
+		```   
 3. Add repository key to the system which we do by importing the GPG keys of the Jenkins
     wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
     Now to verify that it worked, run this command to list the keys added
-    ```bash
-    apt-key list
-    ```
+		```bash
+		apt-key list
+		```
 4. Append the Debian package repository address to the server’s sources.list 
     deb https://pkg.jenkins.io/debian-stable binary/
-    ```bash
-    sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-    ```
+		```bash
+		sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+		```
 5. Install Jenkins package
-    ```bash
-    sudo apt update
-    sudo apt install jenkins
-    ``` 
+		```bash
+		sudo apt update
+		sudo apt install jenkins
+		``` 
 6. Start Jenkins  
-    ```bash
-    sudo systemctl start jenkins
-    ```
+		```bash
+		sudo systemctl start jenkins
+		```
 7. Command for verification that Jenkins started successfully
-    ```bash
-    sudo systemctl status jenkins
-   ```
+		```bash
+		sudo systemctl status jenkins
+	    ```
 8. Adjust our firewall rules so that we can reach it from a web browser
-    ```bash
-    sudo ufw enable (enable ufw)
-   ```
+		```bash
+		sudo ufw enable (enable ufw)
+		```
 9. Jenkins runs on the port 8080, so let’s open that port using ufw  
-    ```bash
-    sudo ufw allow 8080
-   ```
+		```bash
+		sudo ufw allow 8080
+		```
 10. Check ufw’s status to confirm the new rules:
-    ```bash
-    sudo ufw status
-    ```    
+		```bash
+		sudo ufw status
+		```    
 11. Open enter https://<External_IP of instance>:8080 in browser 
     or run curl -vvv <External_IP of instance>:8080                 
 
 Link - https://www.jenkins.io/doc/book/installing/#debianubuntu
 Link - https://medium.com/faun/jenkins-on-google-compute-engine-611bd86e295b
 
-Note: When you turn UFW on it denies any incoming connection. So, you need to disable it for port 22 and then you will be SSH to your machine again. To do so, you should edit your instance and run a Startup Script.
+## Verify Jenkins Version
+1. Go to your /var/lib/jenkins/ there will be a file called config.xml. View the config.xml and there should be a xml entry called:
+<version>YourVersionNumber</version>
+2. Or from Jenkins home screen, navigate to Manage Jenkins -> About Jenkins. You will see the version number there.
+
+##Note: When you turn UFW on it denies any incoming connection. So, you need to disable it for port 22 and then you will be SSH to your machine again. To do so, you should edit your instance and run a Startup Script.
 1. Stop and Edit the instance
 2. For Custom metadata option and Click Add item 
 3. Type startup-script as a key and Copy and paste the command as a value
-    ```bash
-    #! /bin/bash
-    sudo ufw allow 22
-    ```
+		```bash
+		#! /bin/bash
+		sudo ufw allow 22
+		```
 4. Reboot the instance
 
 
-If you want to run docker as non-root user then you need to add it to the docker group.
+##If you want to run docker as non-root user then you need to add it to the docker group.
 1. Create the docker group if it does not exist
     ```bash
     sudo groupadd docker
@@ -148,12 +153,41 @@ Chrome Remote Desktop allows you to remotely access applications with a graphica
 Link - https://cloud.google.com/solutions/chrome-desktop-remote-on-compute-engine
 
 # Setting up Google Cloud SDK
-Try installing google-cloud-sdk from anything other than apt to avoid - 
+##Try installing google-cloud-sdk from anything other than apt to avoid - 
     ERROR: (gcloud.components.update) 
     You cannot perform this action because the Cloud SDK component manager 
     is disabled for this installation.
-Install the Google Cloud SDK, initialize it, and run core gcloud commands from the command-line refer - 
+##Install the Google Cloud SDK, initialize it, and run core gcloud commands from the command-line refer - 
     https://cloud.google.com/sdk/docs/quickstart-linux
 
+# Setting up to deploy docker image to site servers (Heroku)
+Containerise Python Flask using Docker and deploy it onto Heroku
+Python Flask application can be directly deployed onto Heroku but to have more control and features we will containerise the Python application using Docker and then deploy the Docker container onto Heroku.
+This also gives more control over the languages, frameworks, and libraries used to run the app.
+Note: key difference from the usual Flask application is we get the port from Heroku. Without this, Heroku would not be able to bind the port
+Make sure to have a working Docker installation (eg. docker ps) and that you’re logged in to Heroku (heroku login).
+1. Login to Heroku container
+	heroku container:login
+2. Get code by cloning the python code
+	git clone https://github.com/iamabhishekchakraborty/FlaskApp.git
+3. create a new Heroku application (Navigate to the app’s directory)
+	heroku create <yourappname>
+4. create the container onto Heroku (run this from the project folder). Build the image and push to Container Registry - registry.heroku.com	
+	ex: heroku container:push <process-type> (make sure that the directory contains a Dockerfile)
+	heroku container:push web --app <yourappname>
+5. release the container
+	heroku container:release web --app <yourappname>
+
+##Pushing an existing image
+To push an image to Heroku, such as one pulled from Docker Hub, tag it and push it according to this naming template:
+	docker tag <image> registry.heroku.com/<app>/<process-type>
+	docker push registry.heroku.com/<app>/<process-type>
+
+Reference - 
+https://devcenter.heroku.com/categories/deploying-with-docker
+https://devcenter.heroku.com/articles/container-registry-and-runtime
+https://medium.com/@ksashok/containerise-your-python-flask-using-docker-and-deploy-it-onto-heroku-a0b48d025e43
+
+	
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)        

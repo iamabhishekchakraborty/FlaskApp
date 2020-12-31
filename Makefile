@@ -4,6 +4,8 @@ DOCKER = docker
 DOCKER_COMPOSE = docker-compose
 IMAGE = iamabhishekdocker/flask-app
 TAG = BUILD_NUMBER
+APP_SERVER = heroku
+APP_NAME = myflaskappsite
 
 .PHONY: help test_pytest test_unittest
 
@@ -48,6 +50,9 @@ clean: remove system-prune
 
 pull-merge-push:
 	bash -c "scripts/pull-merge-push-gitbranch.sh"
+
+deploy-site-servers:
+	bash -c "scripts/deploy-docker-heroku.sh $(IMAGE):$(TAG) $(APP_NAME)"
 
 ifeq ($(shell uname -s),Darwin)
     STAT_OPT = -f
