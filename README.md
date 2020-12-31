@@ -183,6 +183,12 @@ To push an image to Heroku, such as one pulled from Docker Hub, tag it and push 
 	docker tag <image> registry.heroku.com/<app>/<process-type>
 	docker push registry.heroku.com/<app>/<process-type>
 
+##Create file execute mode permissions in git
+Add the file and mark it executable in a single commit
+    ```bash
+    git update-index --chmod=+x deploy-docker-heroku.sh
+    ```
+    
 Reference - 
 https://devcenter.heroku.com/categories/deploying-with-docker
 https://devcenter.heroku.com/articles/container-registry-and-runtime
