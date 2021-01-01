@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request, make_response
 from config_flaskapp import *
 
@@ -41,6 +42,6 @@ def get_locale():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=port)
+    app.run(debug=True, host='0.0.0.0', port=port)
     # app.run(port=5000)
     # app.run(host='35.209.191.70',port=5000)
