@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.config.from_pyfile('config_flaskapp.py')
 app.config.from_object('config_flaskapp.Config')
 app.config.from_object('config_flaskapp.DevelopmentConfig')
+port = int(os.environ.get("PORT",5000))
 
 
 @app.route('/')
