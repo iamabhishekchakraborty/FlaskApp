@@ -120,8 +120,8 @@ node() {
                 //}
                 // sh './deploy production'
                 print "IMAGE: iamabhishekdocker/flask-app:${env.BUILD_NUMBER}"
-                // sh 'scripts/deploy-docker-heroku.sh iamabhishekdocker/flask-app:${BUILD_NUMBER} myflaskappsite'
-                sh 'make deploy-site-servers TAG=${BUILD_NUMBER}'
+                sh 'scripts/deploy-docker-heroku.sh iamabhishekdocker/flask-app:${BUILD_NUMBER} myflaskappsite'
+                // sh 'make deploy-site-servers TAG=${BUILD_NUMBER}'
                 echo '********* Deployment Stage Finished **********'
             }
 
