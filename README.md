@@ -1,19 +1,19 @@
 # FlaskApp
-
+----------------
 1. push changes (and commit) to git
    - create new branch with name <test>, adding all of the changes that you have made in master branch to this new branch
-		```bash
+		```
 		git checkout -b <test> origin/master
 		git add .
 		git commit -m "<comments for the changes made>"
 		```
    - creates your <test> on origin which is being followed with your branch. The -u is the same as --set-upstream
-		```bash
+		```
 		git push -u origin <test>
 		```
 2. jenkins builds and tests the changes 
 3. if test passes jenkins pushes the code to master branch
-		```bash
+		```
 		git checkout test
 		git pull
 		git checkout master
@@ -24,7 +24,7 @@
 		git push origin master
 		```
 	Note: if the entire git operation is to be carried out by sh script need to make the script executable.
-		```bash
+		```
 		git update-index --chmod=+x scripts/pull-merge-push-gitbranch.sh   
 		git commit -m "<comments>"
 		git ls-files --stage (just to verify the chmod changes)
@@ -32,6 +32,8 @@
 		```  
 4. deploy docker image to site servers 
 5. send notification once the jenkins build is completed with the outcome of the build
+
+![The Process](C:\GitRepo\FlaskApp\3-part-process.jpg?raw=true "CI workflow")
 
 # Set up Jenkins on Google Compute Engine so that it will be available on static IP
 Steps to create GCE Virtual Machine
@@ -42,6 +44,7 @@ Steps to create GCE Virtual Machine
 5. Firewall — check both allow HTTP traffic, allow HTTPS traffic
 6. Networking, tab enter http-server,https-server in Network tag(network tag assign on VM to apply firewall on particular VM)
 7. On the security tab, check SSH Keys-Block project-wide SSH keys and enter the entire key data generated
+
 Link - https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys#gcloud-or-api
 Hit Create. It will take a couple of minutes to create a VM
 
@@ -67,13 +70,17 @@ Hit Create. It will take a couple of minutes to create a VM
 		java -version
 		```   
 3. Add repository key to the system which we do by importing the GPG keys of the Jenkins
-    wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+    ```
+        wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+    ```
     Now to verify that it worked, run this command to list the keys added
 		```bash
 		apt-key list
 		```
 4. Append the Debian package repository address to the server’s sources.list 
-    deb https://pkg.jenkins.io/debian-stable binary/
+    ```
+        deb https://pkg.jenkins.io/debian-stable binary/
+	```
 		```bash
 		sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 		```
@@ -113,7 +120,7 @@ Link - https://medium.com/faun/jenkins-on-google-compute-engine-611bd86e295b
 <version>YourVersionNumber</version>
 2. Or from Jenkins home screen, navigate to Manage Jenkins -> About Jenkins. You will see the version number there.
 
-##Note: When you turn UFW on it denies any incoming connection. So, you need to disable it for port 22 and then you will be SSH to your machine again. To do so, you should edit your instance and run a Startup Script.
+## Note: When you turn UFW on it denies any incoming connection. So, you need to disable it for port 22 and then you will be SSH to your machine again. To do so, you should edit your instance and run a Startup Script.
 1. Stop and Edit the instance
 2. For Custom metadata option and Click Add item 
 3. Type startup-script as a key and Copy and paste the command as a value
@@ -124,7 +131,7 @@ Link - https://medium.com/faun/jenkins-on-google-compute-engine-611bd86e295b
 4. Reboot the instance
 
 
-##If you want to run docker as non-root user then you need to add it to the docker group.
+## If you want to run docker as non-root user then you need to add it to the docker group.
 1. Create the docker group if it does not exist
     ```bash
     sudo groupadd docker
@@ -153,11 +160,11 @@ Chrome Remote Desktop allows you to remotely access applications with a graphica
 Link - https://cloud.google.com/solutions/chrome-desktop-remote-on-compute-engine
 
 # Setting up Google Cloud SDK
-##Try installing google-cloud-sdk from anything other than apt to avoid - 
+## Try installing google-cloud-sdk from anything other than apt to avoid - 
     ERROR: (gcloud.components.update) 
     You cannot perform this action because the Cloud SDK component manager 
     is disabled for this installation.
-##Install the Google Cloud SDK, initialize it, and run core gcloud commands from the command-line refer - 
+## Install the Google Cloud SDK, initialize it, and run core gcloud commands from the command-line refer - 
     https://cloud.google.com/sdk/docs/quickstart-linux
 
 # Setting up to deploy docker image to site servers (Heroku)
@@ -178,21 +185,21 @@ Make sure to have a working Docker installation (eg. docker ps) and that you’r
 5. release the container
 	heroku container:release web --app <yourappname>
 
-##Pushing an existing image
+## Pushing an existing image
 To push an image to Heroku, such as one pulled from Docker Hub, tag it and push it according to this naming template:
 	docker tag <image> registry.heroku.com/<app>/<process-type>
 	docker push registry.heroku.com/<app>/<process-type>
 
-##Create file execute mode permissions in git
+## Create file execute mode permissions in git
 Add the file and mark it executable in a single commit
     ```bash
     git update-index --chmod=+x deploy-docker-heroku.sh
     ```
     
-Reference - 
-https://devcenter.heroku.com/categories/deploying-with-docker
-https://devcenter.heroku.com/articles/container-registry-and-runtime
-https://medium.com/@ksashok/containerise-your-python-flask-using-docker-and-deploy-it-onto-heroku-a0b48d025e43
+**Reference** -- 
+- https://devcenter.heroku.com/categories/deploying-with-docker
+- https://devcenter.heroku.com/articles/container-registry-and-runtime
+- https://medium.com/@ksashok/containerise-your-python-flask-using-docker-and-deploy-it-onto-heroku-a0b48d025e43
 
 	
 ## License

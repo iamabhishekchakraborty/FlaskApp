@@ -41,12 +41,12 @@ node() {
                 sh 'echo ${BUILD_TAG}'
                 sh 'echo ${BUILD_ID}'
                 sh 'printenv'
-            }
+          }
 
           stage('Initialize') {
                 def dockerHome = tool 'gcp-docker'
                 env.PATH = "${dockerHome}/bin:${env.PATH}"
-            }
+          }
 
           stage('Build Docker') {
                     echo '********* Build Stage Started **********'
@@ -54,7 +54,7 @@ node() {
                     echo '********* Build Stage Finished **********'
                     //currentResult = currentBuild.result
                     echo "docker build result: ${currentBuild.result}"
-            }
+          }
 
           stage('Unit Test Application') {
                 env.NODE_ENV = "test"
@@ -71,7 +71,7 @@ node() {
                 // Archive unit tests for the future
                 always {junit allowEmptyResults: true, fingerprint: true, testResults: 'test-reports/unit_tests.xml'}
                 echo '********* Finished **********'
-            }
+          }
 
           stage('Push Docker Image') {
                 echo '********* Pushing docker image to docker hub **********'
@@ -80,7 +80,7 @@ node() {
                         // app.push("latest")
                 }
                 echo '********* Finished **********'
-            }
+          }
 
           stage ('Push code to Master branch') {
                 echo '********* Pushing latest code to master branch (git) Started **********'
@@ -97,7 +97,7 @@ node() {
                        """
                 }
                 echo '********* Finished **********'
-           }
+          }
 
           stage ('Deploy') {
                 echo '********* Deployment Stage Started **********'
@@ -123,12 +123,12 @@ node() {
                 sh 'scripts/deploy-docker-heroku.sh iamabhishekdocker/flask-app:${BUILD_NUMBER} myflaskappsite'
                 // sh 'make deploy-site-servers TAG=${BUILD_NUMBER}'
                 echo '********* Deployment Stage Finished **********'
-            }
+          }
 
           stage ('Cleanup') {
                 echo '********* Cleanup environment Started **********'
                 echo '********* Cleanup environment Finished **********'
-            }
+          }
       }
       catch(e) {
         // If there was an exception thrown, the build failed
