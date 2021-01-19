@@ -18,8 +18,11 @@ node() {
             }
           }
           stage ('Git Checkout Source Code') {
+                // Clean before build
+                // cleanWs()
                 echo "Checking out source code"
                 checkout scm
+                echo "Building ${env.JOB_NAME}..."
                 //sh 'mvn clean install'
                 def v = version()
                 if (v) {
@@ -127,6 +130,17 @@ node() {
 
           stage ('Cleanup') {
                 echo '********* Cleanup environment Started **********'
+                // deleteDir() /* clean up our workspace */
+                // deleteDir does bad things in a docker context at the top level of the WS
+                // Basically, docker gets confused because the mounted directory went away
+                sh("rm -rf *")
+                /*
+                sh "docker stop $(docker ps -q)"    // Stop all containers
+                sh "docker rm $(docker ps -a -q)"   // Remove all stopped containers
+                sh "docker rmi $(docker images -q -f dangling=true)"  // Remove all dangling images
+                */
+                sh "docker system prune -af --volumes"   // Remove all unused containers, networks, images (both dangling and unreferenced), and optionally, volumes
+                // sh "docker rmi ${app.id}"           // remove image created by the current build
                 echo '********* Cleanup environment Finished **********'
           }
       }

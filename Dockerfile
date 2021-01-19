@@ -3,9 +3,9 @@ FROM python:3.6.4
 MAINTAINER Abhishek
 
 ENV JENKINS_USER="jenkins"
-ENV APP_SETTINGS="config.DevelopmentConfig"
-ENV FLASK_RUN_PORT=5000
-ENV FLASK_RUN_HOST 0.0.0.0
+# ENV APP_SETTINGS="config.DevelopmentConfig"
+# ENV FLASK_RUN_PORT=5000
+# ENV FLASK_RUN_HOST 0.0.0.0
 
 RUN mkdir /app
 COPY requirements.txt /app/
@@ -25,6 +25,6 @@ HEALTHCHECK --interval=5s \
             CMD curl -f http://127.0.0.1:5000 || exit 1
 
 # tell docker what port to expose
-EXPOSE  5000
+# EXPOSE  5000
 
 CMD ["python3", "app.py"]
