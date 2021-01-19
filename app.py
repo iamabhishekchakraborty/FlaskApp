@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config.from_pyfile('config_flaskapp.py')
 app.config.from_object('config_flaskapp.Config')
 app.config.from_object('config_flaskapp.DevelopmentConfig')
-port = int(os.environ.get("PORT", 5000))
+port = int(os.environ.get('PORT', 5000))
 
 
 @app.route('/')
@@ -42,6 +42,7 @@ def get_locale():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=port)
+    app.run(debug=True, port=port, host='0.0.0.0')
+    # app.run(debug=True, port=port)
     # app.run(port=5000)
     # app.run(host='35.209.191.70',port=5000)

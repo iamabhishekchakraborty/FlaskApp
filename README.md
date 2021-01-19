@@ -33,7 +33,7 @@
 4. deploy docker image to site servers 
 5. send notification once the jenkins build is completed with the outcome of the build
 
-![The Process](C:\GitRepo\FlaskApp\3-part-process.jpg?raw=true "CI workflow")
+![The Process](https://github.com/iamabhishekchakraborty/FlaskApp/blob/master/3-part-process.jpg?raw=true "CI workflow")
 
 # Set up Jenkins on Google Compute Engine so that it will be available on static IP
 Steps to create GCE Virtual Machine
