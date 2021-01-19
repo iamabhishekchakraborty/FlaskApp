@@ -139,8 +139,8 @@ node() {
                 sh "docker rm $(docker ps -a -q)"   // Remove all stopped containers
                 sh "docker rmi $(docker images -q -f dangling=true)"  // Remove all dangling images
                 */
-                sh("docker version")
-                sh "docker system prune --all --force --volumes"   // Remove all unused containers, networks, images (both dangling and unreferenced), and optionally, volumes
+                // sh("docker version")
+                sh "docker system prune --all --force"   // Remove all unused containers, networks, images (both dangling and unreferenced), and optionally, volumes
                 // sh "docker rmi ${app.id}"           // remove image created by the current build
                 echo '********* Cleanup environment Finished **********'
           }
