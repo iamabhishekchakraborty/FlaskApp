@@ -37,4 +37,4 @@ wcwidth==0.2.4
 Werkzeug==3.0.3
 WTForms==2.2.1
 xmlrunner==1.7.7
-zipp==3.1.0
+zipp==3.19.1
